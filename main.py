@@ -1,12 +1,10 @@
 from terrain import Terrain
-import matplotlib.pyplot as plt
 import pygame
 import sys
 
 pygame.init()
 WIN_WIDTH = 800
 WIN_HEIGHT = 800
-CELL_SIZE = 20
 FPS = 8
 
 # Pygame Setup
@@ -16,20 +14,21 @@ clock = pygame.time.Clock()
 
 
 def main():
-    # x and y
-    terrain = Terrain(101, 201)
-    terrain.generate(octaves=4)
-    terrain.plot()
+    terrain = Terrain(111, 111)
+    terrain.generate(octaves=8)
+    #terrain.plot()
 
     while True:
+        print("I AM LOOPING")
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit
+        terrain.trouble_shoot()
+        terrain.draw(window)
 
-            terrain.draw()
-            pygame.display.update()
-            clock.tick(FPS)
+        pygame.display.update()
+        clock.tick(FPS)
 
 if __name__ == "__main__":
     main()
