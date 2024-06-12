@@ -1,11 +1,9 @@
+from config import *
 from terrain import Terrain
 import pygame
 import sys
 
 pygame.init()
-WIN_WIDTH = 800
-WIN_HEIGHT = 800
-FPS = 8
 
 # Pygame Setup
 window = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
@@ -15,7 +13,7 @@ clock = pygame.time.Clock()
 
 def main():
     terrain = Terrain(111, 111)
-    terrain.generate(octaves=8)
+    terrain.generate()
     #terrain.plot()
 
     while True:
@@ -29,6 +27,7 @@ def main():
 
         pygame.display.update()
         clock.tick(FPS)
+
 
 if __name__ == "__main__":
     main()

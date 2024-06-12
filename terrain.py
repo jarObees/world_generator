@@ -1,3 +1,4 @@
+from config import *
 from tiles import Tile
 from biomes import Biomes
 from perlin_noise import PerlinNoise
@@ -6,13 +7,13 @@ import numpy as np
 import math as m
 import pygame, random
 
+
 class Terrain:
-    # TO: DO X_MAX AND Y_MAX SHOULD BE THE OTHER WAY AROUND.
-    def __init__(self, row_max, column_max):
+    def __init__(self, column_max, row_max):
         self.column_max = row_max
         self.row_max = column_max
         self.terrain = np.zeros((self.column_max, self.row_max))
-        self.tiles = [[None for column in range(column_max)] for row in range(row_max)]
+        self.tiles = [[None for _ in range(column_max)] for _ in range(row_max)]
 
         # Values generated in class have range [-sqrt(N/4), sqrt(N/4)] where N is the number of dimensions
         self.min = -m.sqrt(1/2)
@@ -21,10 +22,9 @@ class Terrain:
         self.biomes = Biomes(self.min, self.max)
 
     # Normalizes noise_values to a range [0, 1] for easier use in Tile.gen_biome method.
-    def _normalize(self, noise_value):
-        maximum = self.max
-        new_noise_value = (noise_value - self.min) / (self.max - self.min)
-        return new_noise_value
+    def _normalize(self, noise_value: float) -> float:
+        norm_value = (noise_value - self.min) / (self.max - self.min)
+        return norm_value
 
     def plot_temp(self, array):
         plt.imshow(array, cmap='gray')
@@ -32,7 +32,7 @@ class Terrain:
         plt.show()
 
     #TODO: Make this work with even dimensions.
-    def _gen_temperature(self, poles, temp_const=0.1) -> list[float]:
+    def _gen_temperature(self, poles: bool, temp_const=0.1) -> list[float]:
         if poles:
             temps = np.zeros_like(self.terrain)
             # if odd
@@ -52,27 +52,25 @@ class Terrain:
                 #self.plot_temp(temps)
                 return temps
 
-    def generate(self, octaves, seed=random.randint(1, 1000), poles=True):
-        # Biome Setup
-        self.biomes.gen_biomes()
+    def generate(self):
+        if RAND_SEED:
+            seed = random.randint(1, 10**5)
+        else:
+            seed = UNIQUE_SEED
 
-        # Generate Tiles
-        noise = PerlinNoise(octaves=octaves, seed=seed)
-        temperatures: list[float] = self._gen_temperature(poles)
+        self.biomes.gen_biomes()
+        terrain_temps = self._gen_temperature(POLES)
+
+        # Generates tiles with elevation and terrain_temps based off of normalized perlin noise.
+        noise = PerlinNoise(octaves=OCTAVES, seed=seed)
         for x in range(self.column_max):
             for y in range(self.row_max):
-                thing = noise([x / self.column_max, y / self.row_max])
                 self.terrain[x][y] = self._normalize(noise([x / self.column_max, y / self.row_max]))
                 elevation = self.terrain[x][y]
-                temperature = temperatures[x][y]
-                if thing <= self.max and elevation > self.max:
-                    print("uh oh ")
-                    print('FIX IT')
+                temperature = terrain_temps[x][y]
                 # Create Tile object
                 self.tiles[x][y] = Tile(elevation, temperature)
-                #TODO Generate the correct biome in the passed-in Tile.
                 self.tiles[x][y].get_biome(self.biomes)
-        print(self.tiles)
 
     def plot(self):
         plt.imshow(self.terrain, cmap='gray')

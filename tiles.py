@@ -1,4 +1,4 @@
-TILE_SIZE = 4
+from config import *
 
 class Tile:
     def __init__(self, elevation, temperature):
