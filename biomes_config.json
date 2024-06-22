@@ -1,0 +1,51 @@
+{
+  "deep_ocean": {
+    "color": [23, 91, 99],
+    "weight": 1,
+    "sub_biomes": null
+    },
+  "ocean": {
+    "color": [51, 150, 163],
+    "weight": 1,
+    "sub_biomes": {
+      "corals": {
+        "color": [143, 293, 39],
+        "weight": 1
+      }
+    }
+  },
+  "shallow_ocean": {
+    "color": [81, 219, 237],
+    "weight": 1,
+    "sub_biomes": null
+    },
+  "beach": {
+    "color": [219, 227, 61],
+    "weight": 1,
+    "sub_biomes": null
+    },
+  "nature": {
+    "color": [60, 130, 49],
+    "weight": 1,
+    "sub_biomes": {
+      "cherry_blossoms": {
+        "color": [232, 137, 194],
+        "weight": 1
+      },
+      "pine_forest": {
+        "color": [33, 69, 40],
+        "weight": 2
+      }
+    }
+  },
+  "mountains": {
+    "color": [125, 125, 125],
+    "weight": 1,
+    "sub_biomes": null
+  },
+  "snow": {
+    "color": [255, 255, 255],
+    "weight": 1,
+    "sub_biomes": null
+  }
+}

@@ -31,26 +31,27 @@ class Terrain:
         plt.colorbar()
         plt.show()
 
-    #TODO: Make this work with even dimensions.
-    def _gen_temperature(self, poles: bool, temp_const=0.1) -> list[float]:
-        if poles:
-            temps = np.zeros_like(self.terrain)
-            # if odd
+    # Generates temp_modifiers that will be summed with perlin noise to create new "temp" value for tile.
+    def gen_temperature_mod(self) -> list[float]:
+        if POLES:
+            temps_mod = np.zeros_like(self.terrain)
+            temp_range = 2 * TEMP_CONST
+            equator = self.row_max // 2
             if self.row_max % 2 != 0:
-                # Since extreme poles will be modified by -temp_const value and equator will be temp_const
-                temp_range = 2 * temp_const
-                equator = self.row_max // 2
                 for i in range(equator):
-                    # Start at poles, and move row by row closer to equator.
-                    # For every additional row add + temp_range / (midpoint - 1), so that it adds equal values up to
-                    # But not including the center row (equator), since we know this value to be the temp_const
-                    temp_adjustment = -temp_const + i*(temp_range / equator)
-                    temps[i, :] = temp_adjustment
-                    temps[-(i + 1), :] = temp_adjustment
-                temps[equator, :] = temp_const
-
-                #self.plot_temp(temps)
-                return temps
+                    # Calculate temperature adjustment for each row
+                    temp_adjustment = -TEMP_CONST + i * (temp_range / equator)
+                    temps_mod[i, :] = temp_adjustment
+                    temps_mod[-(i + 1), :] = temp_adjustment
+                temps_mod[equator, :] = TEMP_CONST
+            else:
+                for i in range(equator - 1):
+                    temp_adjustment = -TEMP_CONST + i * (temp_range / equator)
+                    temps_mod[i, :] = temp_adjustment
+                    temps_mod[-(i + 1), :] = temp_adjustment
+                temps_mod[equator, :] = TEMP_CONST
+                temps_mod[equator - 1, :] = TEMP_CONST
+            return temps_mod
 
     def generate(self):
         if RAND_SEED:
@@ -58,10 +59,8 @@ class Terrain:
         else:
             seed = UNIQUE_SEED
 
-        self.biomes.gen_biomes()
-        terrain_temps = self._gen_temperature(POLES)
-
         # Generates tiles with elevation and terrain_temps based off of normalized perlin noise.
+        terrain_temps = self.gen_temperature_mod()
         noise = PerlinNoise(octaves=OCTAVES, seed=seed)
         for x in range(self.column_max):
             for y in range(self.row_max):

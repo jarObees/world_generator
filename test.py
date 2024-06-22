@@ -48,9 +48,25 @@ def test3():
     plt.imshow(pic, cmap='gray')
     plt.show()
 
+
 def test5():
     array1 = np.array([1, 2])
     array2 = np.array([2, 3])
+
+def dictionary_test():
+    dict = {
+        "bob" : {
+            "ugly" : 'yes',
+            "fat" : 'yes',
+        },
+        "me" : {
+            "ugly" : "no",
+            "fat" : "no",
+        }
+    }
+    for name, stats in dict.items():
+        print(f"Here is the name: {name}")
+        print(f"Here is the stats: {stats}")
 
 def main():
     test3()
@@ -58,4 +74,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    dictionary_test()

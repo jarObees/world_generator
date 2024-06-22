@@ -6,11 +6,12 @@ class Tile:
         self.temperature = temperature
         self.tile_size = TILE_SIZE
         self.biome = None
+        self.sub_biome = None
         self.color = None
 
     def get_biome(self, biomes):
-        for i, (biome, color) in enumerate(biomes.biomes.items()):
-            if self.elevation <= biomes.max_biome_heights[i]:
+        for i, biome in enumerate(biomes.biomes):
+            if self.elevation <= biome.max_elevation:
                 self.biome = biome
-                self.color = color
+                self.color = biome.color
                 break

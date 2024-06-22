@@ -12,7 +12,7 @@ clock = pygame.time.Clock()
 
 
 def main():
-    terrain = Terrain(111, 111)
+    terrain = Terrain(TILE_COLUMNS, TILE_ROWS)
     terrain.generate()
     #terrain.plot()
 
