@@ -14,7 +14,6 @@ clock = pygame.time.Clock()
 def main():
     terrain = Terrain(TILE_COLUMNS, TILE_ROWS)
     terrain.generate()
-    #terrain.plot()
 
     while True:
         print("I AM LOOPING")
@@ -22,7 +21,6 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit
-        terrain.trouble_shoot()
         terrain.draw(window)
 
         pygame.display.update()

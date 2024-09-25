@@ -1,7 +1,7 @@
 {
   "deep_ocean": {
     "color": [23, 91, 99],
-    "weight": 1,
+    "weight": 3,
     "sub_biomes": null
     },
   "ocean": {
@@ -10,7 +10,7 @@
     "sub_biomes": {
       "corals": {
         "color": [143, 293, 39],
-        "weight": 1
+        "weight": 2
       }
     }
   },
@@ -45,7 +45,7 @@
   },
   "snow": {
     "color": [255, 255, 255],
-    "weight": 1,
+    "weight": 1.2,
     "sub_biomes": null
   }
 }

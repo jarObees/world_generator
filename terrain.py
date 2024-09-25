@@ -19,10 +19,10 @@ class Terrain:
         self.min = -m.sqrt(1/2)
         self.max = m.sqrt(1/2)
         # Order from lowest to highest.
-        self.biomes = Biomes(self.min, self.max)
+        self.biomes = Biomes(self.min, self.max, self.column_max, self.row_max)
 
     # Normalizes noise_values to a range [0, 1] for easier use in Tile.gen_biome method.
-    def _normalize(self, noise_value: float) -> float:
+    def normalize(self, noise_value: float) -> float:
         norm_value = (noise_value - self.min) / (self.max - self.min)
         return norm_value
 
@@ -54,6 +54,7 @@ class Terrain:
             return temps_mod
 
     def generate(self):
+        self.biomes.gen_sub_biomes()
         if RAND_SEED:
             seed = random.randint(1, 10**5)
         else:
@@ -64,12 +65,13 @@ class Terrain:
         noise = PerlinNoise(octaves=OCTAVES, seed=seed)
         for x in range(self.column_max):
             for y in range(self.row_max):
-                self.terrain[x][y] = self._normalize(noise([x / self.column_max, y / self.row_max]))
+                self.terrain[x][y] = self.normalize(noise([x / self.column_max, y / self.row_max]))
                 elevation = self.terrain[x][y]
                 temperature = terrain_temps[x][y]
                 # Create Tile object
                 self.tiles[x][y] = Tile(elevation, temperature)
                 self.tiles[x][y].get_biome(self.biomes)
+                self.tiles[x][y].get_sub_biome()
 
     def plot(self):
         plt.imshow(self.terrain, cmap='gray')

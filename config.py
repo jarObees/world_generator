@@ -20,6 +20,7 @@ RAND_SEED = True
 UNIQUE_SEED = 1
 
 # Biome Settings. Length of WEIGHTS_ lists must match length of BIOMES. Higher weight means more of that biome.
+"""
 BIOMES = {
             "deep_ocean": (23, 91, 99),
             "ocean": (51, 150, 163),
@@ -34,3 +35,5 @@ WEIGHTS_ISLAND = [3, 2, 1, 1, 1, 1, 1.2]
 WEIGHTS_FORESTS = [1, 1, 1, 0.5, 2, 1, 2]
 
 WEIGHTS = WEIGHTS_FORESTS
+"""
+SUB_BIOMES = True

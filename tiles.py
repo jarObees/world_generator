@@ -15,3 +15,10 @@ class Tile:
                 self.biome = biome
                 self.color = biome.color
                 break
+
+    def get_sub_biome(self):
+        for i, sub_biome in enumerate(self.biome.sub_biomes):
+            if sub_biome. #TODO <= sub_biome.max_elevation:
+                self.sub_biome = sub_biome
+                self.color = sub_biome.color
+                break
