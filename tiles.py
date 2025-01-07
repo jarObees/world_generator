@@ -1,3 +1,10 @@
+"""
+tiles.py
+
+Description:
+    Each tile generated is an instance of a Tile Class. Contains data of the tile.
+"""
+
 from config import *
 
 class Tile:

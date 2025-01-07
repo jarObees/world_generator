@@ -1,8 +1,8 @@
 # Window Settings
-WIN_WIDTH = 800
-WIN_HEIGHT = 800
+WIN_WIDTH = 400
+WIN_HEIGHT = 400
 FPS = 8
-TILE_SIZE = 4
+TILE_SIZE = 1
 
 # Generation settings
 POLES = True
@@ -12,7 +12,7 @@ OCTAVES = 8
 RAND_SEED = True
 UNIQUE_SEED = 1
 
-# Biome Settings. Length of WEIGHTS_ lists must match length of BIOMES.
+# Dictionary holds biome names and their associated colors (in RGB)
 BIOMES = {
             "deep_ocean": (23, 91, 99),
             "ocean": (51, 150, 163),
@@ -23,6 +23,8 @@ BIOMES = {
             "snow": (255, 255, 255)
         }
 
+# Some example setups of potential weights you can assign to each biome respectively.
+# Higher number indicates a larger favoring towards that biome tile.
 WEIGHTS_ISLAND = [3, 2, 1, 1, 1, 1, 1.2]
 WEIGHTS_LAKES = [1, 1, 1, 0.5, 2, 1, 2]
 

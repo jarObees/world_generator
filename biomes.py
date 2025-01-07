@@ -1,3 +1,9 @@
+"""
+biomes.py
+
+Description:
+    Class containing code for calculating data for each biome.
+"""
 from config import *
 
 class Biomes:

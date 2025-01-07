@@ -1,3 +1,10 @@
+"""
+terrain.py
+
+Description:
+    Main class that holds biome info, and methods for generating and plotting map stuff.
+
+"""
 from config import *
 from tiles import Tile
 from biomes import Biomes
